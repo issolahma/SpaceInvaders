@@ -21,9 +21,7 @@ namespace spaceInvaders
             myMenu.PrintTitle();
             myMenu.PrintMenu();
 
-            // Listen if a key is pressed, from eventhandler
-            myMenu.KeyListener(ctrl);
-
+            // Listen if esc is pressed, for all the classes
             ListenToEsc(ctrl);
 
             // Method to check if a key is presed

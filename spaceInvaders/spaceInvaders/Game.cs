@@ -9,16 +9,21 @@ namespace spaceInvaders
 		private const string UFO_ENEMY3 = "]o[";
 		private const string UFO_ENEMY2 = "}U{";
 		private const string UFO_ENEMY1 = "-0-";
-		private int lives = 1;
+        private const int intervalEnemy = 1000;
+        private const int xPosBonusEnemy = 0;
+        private const int yPosBonusEnemy = 4;
+        private int lives = 1;
 		private bool isAlive = true;
 		private int xPosShip = 30;
 		private int yPosShip = 21;
 		private int xPosEnemy = 10;
 		private int yPosEnemy = 6;
-		private int xPosBonusEnemy = 0;
-		private int yPosBonusEnemy = 4;
+		
+        private Ennemy[,] ufo3 = new Ennemy[5, 11];
+        private bool goLeft = false;
+        UFOBonus ufoBonus;
 
-		public Game ()
+        public Game ()
 		{
 		}
 
@@ -46,12 +51,11 @@ namespace spaceInvaders
 			//Vaisseau joueur
 			Ship playerShip = new Ship(lives, xPosShip, yPosShip, UFO_PLAYER, isAlive);
 			playerShip.SpawnPlayer();
-			playerShip.KeyListener(Program.ctrl);
 
 
 			//Place les ennemis
 			Console.ForegroundColor = ConsoleColor.White;
-			Ennemy[,] ufo3 = new Ennemy[5, 11];
+			
 			for (int i = 0; i < 5; i++)
 			{
 				xPosEnemy = 10;
@@ -77,14 +81,49 @@ namespace spaceInvaders
 				}
 				yPosEnemy += 1;
 			}
-			foreach (Ennemy ufo in ufo3)
-			{
-				ufo.PrintEnnemy();
-			}
+            foreach (Ennemy ufo in ufo3)
+            {
+                ufo.PrintEnnemy();
+            }
 
-			UFOBonus ufoBonus = new UFOBonus(lives, xPosBonusEnemy, yPosBonusEnemy, UFO_BONUS, isAlive);
+            ufoBonus = new UFOBonus(lives, xPosBonusEnemy, yPosBonusEnemy, UFO_BONUS, isAlive);
 			ufoBonus.Spawn();
 		}
-	}
+
+        public void startGame()
+        {
+            // Timer to move the enemys
+            TimeCtrl enemyTimer = new TimeCtrl(intervalEnemy);
+            enemyTimer.timeUp += MoveAllEnemy;
+        }
+
+        public void MoveAllEnemy(object sender, EventArgs e)
+        {
+
+            foreach (Ennemy ufo in ufo3)
+            {
+                if ((ufo.xPos == 0) && (goLeft))
+                {
+                    goLeft = false;
+                }
+                else if ((ufo.xPos == Console.WindowWidth-4) && (!goLeft))
+                {
+                    goLeft = true;
+                }
+            }
+            foreach (Ennemy ufo in ufo3)
+            {
+                if (goLeft)
+                {
+                    ufo.MoveLeft();
+                }
+                else
+                {
+                    ufo.MoveRight();
+                }
+            }
+          
+        }
+    }
 }
 

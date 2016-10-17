@@ -10,10 +10,15 @@ namespace spaceInvaders
 		private int Y = 2;
 
 		public Menu ()
-		{			
+		{
+            this.KeyListener(Program.ctrl);		
 		}
 
-		public void KeyListener(Controls ctrl)
+        /// <summary>
+        /// Listen if menu's usefull keys are pressed
+        /// </summary>
+        /// <param name="ctrl"></param>
+        public void KeyListener(Controls ctrl)
 		{
 			ctrl.upPressed += MenuSelectUp;
 			ctrl.downPressed += MenuSelectDown;
@@ -74,10 +79,16 @@ namespace spaceInvaders
 
 		public void MenuSelectEnter(object sender, EventArgs e)
 		{
-			switch (menuIndex) {
-			case 0: 
-				Game myGame = new Game ();
+            // Controls to stop outside the menu
+            Program.ctrl.upPressed = null;
+            Program.ctrl.downPressed = null;
+            Program.ctrl.enterPressed = null;
+
+            switch (menuIndex) {
+			case 0:
+                Game myGame = new Game ();
 				myGame.InitGame ();
+                myGame.startGame();
 				break;
 			case 1:
 				//Options
