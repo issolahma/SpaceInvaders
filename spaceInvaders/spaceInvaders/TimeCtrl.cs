@@ -16,7 +16,7 @@ namespace spaceInvaders
         public TimeCtrl(int interval)
         {
             this.interval = interval;
-            this.InitTimer();
+            InitTimer();
         }
 
         private void InitTimer()
@@ -28,10 +28,7 @@ namespace spaceInvaders
 
         public void Event(object source, ElapsedEventArgs e)
         {
-            if (this.timeUp != null)
-            {
-                this.timeUp(this, new EventArgs());
-            }
+            timeUp?.Invoke(this, new EventArgs());
         }
     }
 }

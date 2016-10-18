@@ -20,7 +20,7 @@ namespace spaceInvaders
 		{
 			ctrl.leftPressed += MoveLeft;
 			ctrl.rightPressed += MoveRight;
-            //ctrl.spacePressed += Fire;
+            ctrl.spacePressed += Fire;
         }
 
         public void MoveLeft(object sender, EventArgs e)
@@ -31,6 +31,12 @@ namespace spaceInvaders
         public void MoveRight(object sender, EventArgs e)
         {
             MoveRight();
+        }
+
+        public void Fire(object sender, EventArgs e)
+        {
+            Shoot shipShoot = new Shoot(xPos+2, yPos-1);
+            shipShoot.FireUp();
         }
     }
 }

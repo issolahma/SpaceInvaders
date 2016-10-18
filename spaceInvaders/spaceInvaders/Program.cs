@@ -26,11 +26,6 @@ namespace spaceInvaders
 
             // Method to check if a key is presed
             ctrl.CheckPressedKey();
-
-            /* Créer un nouveau thread pour la detection des touches http://www.tutorialspoint.com/csharp/csharp_multithreading.htm*/
-            //ThreadStart detectTouchREF = new ThreadStart(ctrl.CheckPressedKey);
-            //Thread detectTouch = new Thread(detectTouchREF); ------------------Utile??------------------------------------------
-            //detectTouch.Start();
         }
 
         /// <summary>
@@ -49,6 +44,11 @@ namespace spaceInvaders
         /// <param name="e"></param>
         static void ReturnToMenu(object sender, EventArgs e)
         {
+            // Srop game eventhandler
+            ctrl.leftPressed += null;
+            ctrl.rightPressed += null;
+            ctrl.spacePressed += null;
+
             Menu myMenu = new Menu();
             myMenu.PrintTitle();
             myMenu.PrintMenu();

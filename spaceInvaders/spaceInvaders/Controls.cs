@@ -10,8 +10,9 @@ namespace spaceInvaders
 		public EventHandler escPressed;
 		public EventHandler leftPressed;
 		public EventHandler rightPressed;
+        public EventHandler spacePressed;
 
-		public Controls ()
+        public Controls ()
 		{
 		}
 
@@ -22,44 +23,26 @@ namespace spaceInvaders
 
 				switch (info.Key) {
 				case ConsoleKey.UpArrow:
-					if (this.upPressed != null)
-					{
-						this.upPressed(this, new EventArgs());
-					}
-					break;
+                        upPressed?.Invoke(this, new EventArgs());
+                        break;
 				case ConsoleKey.Enter:
-					if (this.enterPressed != null)
-					{
-						this.enterPressed(this, new EventArgs());
-					}
-					break;
+                        enterPressed?.Invoke(this, new EventArgs());
+                        break;
 				case ConsoleKey.DownArrow:
-					if (this.downPressed != null)
-					{
-						this.downPressed(this, new EventArgs());
-					}
-					break;
+                        downPressed?.Invoke(this, new EventArgs());
+                        break;
 				case ConsoleKey.LeftArrow:
-					if (this.leftPressed != null)
-					{
-						this.leftPressed(this, new EventArgs());
-					}
-					break;
+                        leftPressed?.Invoke(this, new EventArgs());
+                        break;
 				case ConsoleKey.RightArrow:
-					if (this.rightPressed != null)
-					{
-						this.rightPressed(this, new EventArgs());
-					}
-					break;
+                        rightPressed?.Invoke(this, new EventArgs());
+                        break;
 				case ConsoleKey.Spacebar:
-					//Tir
-					break;
+                        spacePressed?.Invoke(this, new EventArgs());
+                        break;
 				case ConsoleKey.Escape:
-					if (this.escPressed != null)
-					{
-						this.escPressed(this, new EventArgs());
-					}
-					break;
+                        escPressed?.Invoke(this, new EventArgs());
+                        break;
 				default:
 					break;
 				}
