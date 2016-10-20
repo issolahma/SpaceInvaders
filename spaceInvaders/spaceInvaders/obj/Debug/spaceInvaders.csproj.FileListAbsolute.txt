@@ -5,3 +5,4 @@ C:\Users\Moo\Documents\SpaceInvaders\spaceInvaders\spaceInvaders\obj\Debug\space
 C:\Users\Moo\Documents\SpaceInvaders\spaceInvaders\spaceInvaders\obj\Debug\spaceInvaders.pdb
 C:\Users\Moo\Documents\SpaceInvaders\spaceInvaders\spaceInvaders\bin\Debug\spaceInvaders.exe.CodeAnalysisLog.xml
 C:\Users\Moo\Documents\SpaceInvaders\spaceInvaders\spaceInvaders\bin\Debug\spaceInvaders.exe.lastcodeanalysissucceeded
+C:\Users\Moo\Documents\SpaceInvaders\spaceInvaders\spaceInvaders\obj\Debug\spaceInvaders.csprojResolveAssemblyReference.cache

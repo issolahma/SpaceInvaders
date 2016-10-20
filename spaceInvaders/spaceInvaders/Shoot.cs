@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace spaceInvaders
 {
-    class Shoot
+    public class Shoot
     {
         private int xPosShoot = 0;
         private int yPosShoot = 0;
@@ -14,8 +14,8 @@ namespace spaceInvaders
 
         public Shoot(int xPos, int yPos)
         {
-            this.xPosShoot = xPos;
-            this.yPosShoot = yPos;
+            xPosShoot = xPos;
+            yPosShoot = yPos;
         }
 
         public void FireUp()
@@ -42,6 +42,16 @@ namespace spaceInvaders
                 yPosShoot++;
                 Thread.Sleep(400);
             } while (yPosShoot <= 21);
+        }
+
+        public int GetXPosShoot()
+        {
+            return xPosShoot;
+        }
+
+        public int GetYPosShoot()
+        {
+            return yPosShoot;
         }
     }
 }

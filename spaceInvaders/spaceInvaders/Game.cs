@@ -102,11 +102,11 @@ namespace spaceInvaders
 
             foreach (Ennemy ufo in ufo3)
             {
-                if ((ufo.xPos == 0) && (goLeft))
+                if ((ufo.GetXPos() == 0) && (goLeft))
                 {
                     goLeft = false;
                 }
-                else if ((ufo.xPos == Console.WindowWidth-4) && (!goLeft))
+                else if ((ufo.GetXPos() == Console.WindowWidth-4) && (!goLeft))
                 {
                     goLeft = true;
                 }

@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace spaceInvaders
 {
-    class TimeCtrl
+    public class TimeCtrl
     {
         private int interval = 0;
         private Timer timer = new Timer();

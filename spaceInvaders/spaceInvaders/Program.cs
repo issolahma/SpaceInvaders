@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace spaceInvaders
 {
-    class Program
+    public class Program
     {
         // Create a new key control object for all the classes
         public static Controls ctrl = new Controls();

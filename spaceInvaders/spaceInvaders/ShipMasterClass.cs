@@ -5,7 +5,7 @@ namespace spaceInvaders
     public class ShipMasterClass
     {
         protected int lives = 0;
-        public int xPos { get; set; }
+        protected int xPos = 0;
         protected int yPos = 0;
         protected string skin = "";
         protected bool isAlive = true;
@@ -50,6 +50,15 @@ namespace spaceInvaders
 
 		}
 
+        public int GetXPos()
+        {
+            return xPos;
+        }
+
+        public int GetYPos()
+        {
+            return yPos;
+        }
     }
 }
 
