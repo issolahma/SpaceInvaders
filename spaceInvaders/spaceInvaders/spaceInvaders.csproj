@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apropos.cs" />
-    <Compile Include="HitDetector.cs" />
+    <Compile Include="DetectHit.cs" />
     <Compile Include="Shoot.cs" />
     <Compile Include="TimeCtrl.cs" />
     <Compile Include="Controls.cs" />

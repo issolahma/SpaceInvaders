@@ -9,5 +9,6 @@ namespace spaceInvaders
     public class DetectHit
     {
         TimeCtrl checkHit = new TimeCtrl(100);
+        
     }
 }
