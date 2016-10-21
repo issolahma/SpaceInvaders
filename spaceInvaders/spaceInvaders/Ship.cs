@@ -7,7 +7,10 @@ namespace spaceInvaders
 
 		public Ship(int lives, int xPos, int yPos, string skin, bool isAlive):base(lives, xPos, yPos, skin, isAlive)
 		{
-            KeyListener(Program.ctrl);
+            //Add ship method control to the keys events
+            Program.ctrl.leftPressed += MoveLeft;
+            Program.ctrl.rightPressed += MoveRight;
+            Program.ctrl.spacePressed += Fire;
         }
 
 		public void SpawnPlayer()
@@ -15,13 +18,6 @@ namespace spaceInvaders
 			Console.SetCursorPosition(xPos, yPos);
 			Console.WriteLine(skin);
 		}
-
-		public void KeyListener(Controls ctrl)
-		{
-			ctrl.leftPressed += MoveLeft;
-			ctrl.rightPressed += MoveRight;
-            ctrl.spacePressed += Fire;
-        }
 
         public void MoveLeft(object sender, EventArgs e)
         {

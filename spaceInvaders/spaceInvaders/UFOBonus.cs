@@ -6,10 +6,11 @@ namespace spaceInvaders
     public class UFOBonus:Ennemy
 	{
 		private const int HEIGHT_UFO_BONUS = 1; // Ufo's height
-        private const int INTERVAL = 200; // Timer interval (ufo's speed)
         private const int XSPAWN = 0; // Value of axis X when ufo spawn
         private int bonusSize = 5; // Ufo's size
-        TimeCtrl bonusTimer = new TimeCtrl(INTERVAL); // Timer event to move the Bonus enemys
+        public event EventHandler isInTheEnd;
+        public event EventHandler timeToRespawn;
+        private Random rnd = new Random();
 
         /// <summary>
         /// Constructor
@@ -33,9 +34,6 @@ namespace spaceInvaders
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.Write(skin);
             Console.ForegroundColor = ConsoleColor.Gray;
-
-            // Add the Move method to the envent, the method will run each 'INTERVAL' milisecond
-            bonusTimer.timeUp += Move;
         }
 
         /// <summary>
@@ -59,19 +57,28 @@ namespace spaceInvaders
                     Console.MoveBufferArea(xPos, yPos, bonusSize, SHIPHEIGHT, xPos + 1, yPos);
                     xPos++;
                     bonusSize--;
-
                 }
             }
 
             if (bonusSize == 0)
             {
-                bonusTimer.timeUp -= Move;
-                Thread.Sleep(3000);
+                OnTouchTheEnd();
+                Thread.Sleep(rnd.Next(2000, 10000));
                 xPos = XSPAWN;
                 bonusSize = skin.Length;
-                Spawn();
+                OnRespawn();
             }
 		}
-	}
+
+        protected virtual void OnTouchTheEnd()
+        {
+            isInTheEnd?.Invoke(this, new EventArgs());
+        }
+
+        protected virtual void OnRespawn()
+        {
+            timeToRespawn?.Invoke(this, new EventArgs());
+        }
+    }
 }
 

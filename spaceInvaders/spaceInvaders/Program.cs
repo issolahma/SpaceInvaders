@@ -8,33 +8,23 @@ namespace spaceInvaders
 {
     public class Program
     {
-        // Create a new key control object for all the classes
+        // Create a new key control object for all the classes (esc button)
         public static Controls ctrl = new Controls();
+        private static Menu myMenu;
+        public static Ship playerShip;
+        public static Game myGame;
 
         static void Main(string[] args)
         {
             Console.SetWindowSize(68, 30);
             Console.SetBufferSize(68, 30);
+            Console.CursorVisible = false;
+            //Global esc key listener
+            ctrl.escPressed += GoToMenu;
+            // Create a new menu
+            GoToMenu(null, null);
 
-            // Create a new menu object
-            Menu myMenu = new Menu();
-            myMenu.PrintTitle();
-            myMenu.PrintMenu();
-
-            // Listen if esc is pressed, for all the classes
-            ListenToEsc(ctrl);
-
-            // Method to check if a key is presed
-            ctrl.CheckPressedKey();
-        }
-
-        /// <summary>
-        /// Listens when esc button is pressed
-        /// </summary>
-        /// <param name="ctrl">ctrl</param>
-        static void ListenToEsc(Controls ctrl)
-        {
-            ctrl.escPressed += ReturnToMenu;
+            ctrl.RunCheckKeys();
         }
 
         /// <summary>
@@ -42,16 +32,67 @@ namespace spaceInvaders
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void ReturnToMenu(object sender, EventArgs e)
+        static void GoToMenu(object sender, EventArgs e)
         {
-            // Srop game eventhandler
-            ctrl.leftPressed += null;
-            ctrl.rightPressed += null;
-            ctrl.spacePressed += null;
-
-            Menu myMenu = new Menu();
+            // Create a new menu object
+            myMenu = new Menu();
             myMenu.PrintTitle();
             myMenu.PrintMenu();
+
+            if (playerShip != null)
+            {
+                //remove game's keys events
+                ctrl.leftPressed -= playerShip.MoveLeft;
+                ctrl.rightPressed -= playerShip.MoveRight;
+                ctrl.spacePressed -= playerShip.Fire;
+            }
+
+            //Add usefull keys events
+            ctrl.upPressed += myMenu.MenuSelectUp;
+            ctrl.downPressed += myMenu.MenuSelectDown;
+            ctrl.enterPressed += myMenu.MenuSelectEnter;
+            myMenu.menuSelected += GoToChoosenMenu;
+        }
+
+        /// <summary>
+        /// Go to the selected menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">menu index from class Menu</param>
+        static void GoToChoosenMenu(object sender, MenuEventArgs e)
+        {
+            int menuIndex = e.MenuIndex;
+           
+            switch (menuIndex)
+            {
+                case 0://Jouer
+                    //Stop menu keys events
+                    ctrl.upPressed -= myMenu.MenuSelectUp;
+                    ctrl.downPressed -= myMenu.MenuSelectDown;
+                    ctrl.enterPressed -= myMenu.MenuSelectEnter;
+
+                    //init and start a new game
+                    myGame = new Game();
+                    ctrl.escPressed += myGame.stopGame;
+                    myGame.InitGame();
+                    myGame.startGame();
+                    break;
+                case 1:
+                    //Options
+                    break;
+                case 2:
+                    //Highscore
+                    break;
+                case 3://A propos
+                    var aProppos = new Apropos();
+                    aProppos.printText();
+                    break;
+                case 4://Quitter
+                    Environment.Exit(0);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }

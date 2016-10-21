@@ -3,28 +3,21 @@ using System.Threading;
 
 namespace spaceInvaders
 {
-	public class Menu
-	{
-		private int menuIndex = 0;
-		private string[] menuArray = new string[5] { "Jouer", "Options", "Highscore", "A propos", "Quitter" };
-		private int Y = 2;
+    public class MenuEventArgs:EventArgs
+    {
+        public int MenuIndex { get; set; }
+    }
 
-		public Menu ()
-		{
-            this.KeyListener(Program.ctrl);		
-		}
+    public class Menu
+	{
+		private int menuIndex = 0;  // Menu we are in
+		private string[] menuArray = new string[5] { "Jouer", "Options", "Highscore", "A propos", "Quitter" }; 
+		private int Y = 2; // Line to write the title
+        public event EventHandler<MenuEventArgs> menuSelected; //Event to tell which choise has been made
 
         /// <summary>
-        /// Listen if menu's usefull keys are pressed
+        /// Print the menu's title
         /// </summary>
-        /// <param name="ctrl"></param>
-        public void KeyListener(Controls ctrl)
-		{
-			ctrl.upPressed += MenuSelectUp;
-			ctrl.downPressed += MenuSelectDown;
-			ctrl.enterPressed += MenuSelectEnter;
-		}
-
 		public void PrintTitle ()
 		{
 			Console.Clear ();
@@ -45,7 +38,10 @@ namespace spaceInvaders
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 
-		public void PrintMenu ()
+        /// <summary>
+        /// Print the menu with yellow color for selected entry
+        /// </summary>
+        public void PrintMenu ()
 		{
 			Y = 12;
 			for (int i = 0; i < menuArray.Length; i++) {
@@ -61,52 +57,52 @@ namespace spaceInvaders
 			}
 		}
 
-		public void MenuSelectUp(object sender, EventArgs e)
+        /// <summary>
+        /// Select menu upside, done when up arrow is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MenuSelectUp(object sender, EventArgs e)
 		{
-			if (menuIndex != 0) {
+            // If menuIndex == 0 we are at the top -> do nothing, if else decrease the index
+            if (menuIndex != 0) {
 				menuIndex -= 1;
 				PrintMenu ();
 			}
 		}
 
+        /// <summary>
+        /// Select menu downside, done when down arrow is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		public void MenuSelectDown(object sender, EventArgs e)
 		{
-			if (menuIndex != 4) {
+            // If menuIndex == 4 we are down -> do nothing, if else increase the index
+            if (menuIndex != 4) {
 				menuIndex += 1;
 				PrintMenu ();
 			}
 		}
 
+        /// <summary>
+        /// When enter is pressed ruin the event OnMenuSelected 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		public void MenuSelectEnter(object sender, EventArgs e)
 		{
-            // Controls to stop outside the menu
-            Program.ctrl.upPressed = null;
-            Program.ctrl.downPressed = null;
-            Program.ctrl.enterPressed = null;
-
-            switch (menuIndex) {
-			case 0:
-                Game myGame = new Game ();
-				myGame.InitGame ();
-                myGame.startGame();
-				break;
-			case 1:
-				//Options
-				break;
-			case 2:
-				//Highscore
-				break;
-			case 3:
-				Apropos aPropos = new Apropos ();
-				aPropos.printText ();
-				break;
-			case 4:
-				Environment.Exit(0);
-				break;
-			default:
-				break;
-			}
+            OnMenuSelected(menuIndex);
 		}
+
+        /// <summary>
+        /// Event when a menu is selected
+        /// </summary>
+        /// <param name="menuIndex"></param>
+        protected virtual void OnMenuSelected(int menuIndex)
+        {
+            menuSelected?.Invoke(this, new MenuEventArgs() {MenuIndex = menuIndex });
+        }
 	}
 }
 

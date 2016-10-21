@@ -4,38 +4,47 @@ namespace spaceInvaders
 {
 	public class Game
 	{
+        // Ship's skins
 		private const string UFO_PLAYER = "<xYx>";
 		private const string UFO_BONUS = "<=&=>";
 		private const string UFO_ENEMY3 = "]o[";
 		private const string UFO_ENEMY2 = "}U{";
 		private const string UFO_ENEMY1 = "-0-";
-        private const int intervalEnemy = 1000;
+
+        //Life status of the ships
+        private int lives = 1;
+        private bool isAlive = true;
+
+        //Speed of the basics enemy
+        private const int INTERVALENEMY = 1000;
+        private const int INTERVALBONUS = 200; // Timer interval (ufo's speed)
+        //Positions of all the ships
         private const int xPosBonusEnemy = 0;
         private const int yPosBonusEnemy = 4;
-        private int lives = 1;
-		private bool isAlive = true;
 		private int xPosShip = 30;
 		private int yPosShip = 21;
 		private int xPosEnemy = 10;
 		private int yPosEnemy = 6;
 		
+        //Array of basics enemy
         private Ennemy[,] ufo3 = new Ennemy[5, 11];
+        //Variable to say if enemy goes right or left
         private bool goLeft = false;
+
+        //Create a bonus enemy(red one)
         UFOBonus ufoBonus;
 
-        public Game ()
-		{
-		}
+        // Timer to move the enemys
+        TimeCtrl enemyTimer = new TimeCtrl(INTERVALENEMY);
+        public TimeCtrl bonusTimer = new TimeCtrl(INTERVALBONUS); // Timer event to move the Bonus enemys
 
-		public void KeyListener(Controls ctrl)
-		{
-			
-		}
-
-		public void InitGame()
+        /// <summary>
+        /// Init the base of the game, screen, scores...
+        /// </summary>
+        public void InitGame()
 		{
 			Console.Clear();
-			//Affiche scores et vies
+			
 			Console.ForegroundColor = ConsoleColor.White;
 			Console.Write("\n   Score : ");
 
@@ -48,12 +57,12 @@ namespace spaceInvaders
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("{0} {0} {0}\n", UFO_PLAYER);
 
-			//Vaisseau joueur
-			Ship playerShip = new Ship(lives, xPosShip, yPosShip, UFO_PLAYER, isAlive);
-			playerShip.SpawnPlayer();
+			//Create player's ship, and make it spawn on the screen
+			Program.playerShip = new Ship(lives, xPosShip, yPosShip, UFO_PLAYER, isAlive);
+			Program.playerShip.SpawnPlayer();
 
 
-			//Place les ennemis
+			//Create all the basics enemys
 			Console.ForegroundColor = ConsoleColor.White;
 			
 			for (int i = 0; i < 5; i++)
@@ -81,36 +90,60 @@ namespace spaceInvaders
 				}
 				yPosEnemy += 1;
 			}
+            //Print all the basics enemys
             foreach (Ennemy ufo in ufo3)
             {
                 ufo.PrintEnnemy();
             }
 
+            //Make the bonus enemy spawn on the screen
             ufoBonus = new UFOBonus(lives, xPosBonusEnemy, yPosBonusEnemy, UFO_BONUS, isAlive);
 			ufoBonus.Spawn();
 		}
 
+        /// <summary>
+        /// Start the game
+        /// </summary>
         public void startGame()
-        {
-            // Timer to move the enemys
-            TimeCtrl enemyTimer = new TimeCtrl(intervalEnemy);
-            enemyTimer.timeUp += MoveAllEnemy;
+        {  
+            enemyTimer.timeUp += MoveAllEnemy; 
+            bonusTimer.timeUp += ufoBonus.Move;
+            ufoBonus.isInTheEnd += stopBonusTimer;
+            ufoBonus.timeToRespawn += startBonus;
         }
 
+        /// <summary>
+        /// Stop the game
+        /// </summary>
+        public void stopGame(object sender, EventArgs e)
+        {
+            enemyTimer.timeUp -= MoveAllEnemy;
+            bonusTimer.timeUp -= ufoBonus.Move;
+        }
+
+        /// <summary>
+        /// Move all the basics enemys in the right direction
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void MoveAllEnemy(object sender, EventArgs e)
         {
-
+            // Check if the enemy have to change their direction
             foreach (Ennemy ufo in ufo3)
             {
-                if ((ufo.GetXPos() == 0) && (goLeft))
+                //X position == 1 -> they have to go to the right
+                if ((ufo.GetXPos() == 1) && (goLeft))
                 {
                     goLeft = false;
                 }
-                else if ((ufo.GetXPos() == Console.WindowWidth-4) && (!goLeft))
+                //X position == windows size -> they have to go to the left
+                else if ((ufo.GetXPos() == Console.WindowWidth-(UFO_ENEMY1.Length+1)) && (!goLeft))
                 {
                     goLeft = true;
                 }
             }
+
+            //Make the enemys move to the direction they have to
             foreach (Ennemy ufo in ufo3)
             {
                 if (goLeft)
@@ -124,6 +157,18 @@ namespace spaceInvaders
             }
           
         }
+
+        private void stopBonusTimer(object sender, EventArgs e)
+        {
+            bonusTimer.timeUp -= ufoBonus.Move;
+        }
+
+        private void startBonus(object sender, EventArgs e)
+        {
+            bonusTimer.timeUp += ufoBonus.Move;
+            ufoBonus.Spawn();
+        }
+
     }
 }
 

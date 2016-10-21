@@ -1,22 +1,30 @@
-﻿using System;
+﻿//https://www.youtube.com/watch?v=jQgwEsJISy0
+
+using System;
 
 namespace spaceInvaders
 {
 	public class Controls
 	{
-		public EventHandler upPressed;
-		public EventHandler downPressed;
-		public EventHandler enterPressed;
-		public EventHandler escPressed;
-		public EventHandler leftPressed;
-		public EventHandler rightPressed;
-        public EventHandler spacePressed;
-
+		public event EventHandler upPressed;
+		public event EventHandler downPressed;
+		public event EventHandler enterPressed;
+		public event EventHandler escPressed;
+		public event EventHandler leftPressed;
+		public event EventHandler rightPressed;
+        public event EventHandler spacePressed;
+        
         public Controls ()
 		{
+          
 		}
 
-		public void CheckPressedKey ()
+        public void RunCheckKeys ()
+        {
+            OnPressedKey();
+        }
+
+		protected virtual void OnPressedKey ()
 		{
 			while (true) {
 				ConsoleKeyInfo info = Console.ReadKey (true);
