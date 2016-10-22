@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D609CE1-E529-4A4A-A8BA-B2A5C50CF744}</ProjectGuid>
+    <ProjectGuid>{BED3F320-B979-4ACF-8112-6A07D9466443}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>spaceInvaders</RootNamespace>
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apropos.cs" />
+    <Compile Include="ColisionDetector.cs" />
     <Compile Include="Controls.cs" />
     <Compile Include="DetectHit.cs" />
     <Compile Include="Ennemy.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="ShipMasterClass.cs" />
-    <Compile Include="Shoot.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="test.cs" />
     <Compile Include="TimeCtrl.cs" />
     <Compile Include="UFOBonus.cs" />

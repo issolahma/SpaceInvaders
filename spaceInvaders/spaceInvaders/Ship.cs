@@ -29,11 +29,7 @@ namespace spaceInvaders
             MoveRight();
         }
 
-        public void Fire(object sender, EventArgs e)
-        {
-            Shoot shipShoot = new Shoot(xPos+2, yPos-1);
-            shipShoot.FireUp();
-        }
+        
     }
 }
 

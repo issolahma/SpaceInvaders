@@ -45,10 +45,18 @@ namespace spaceInvaders
 
 		}
 
-		protected void Fire()
-		{
-
-		}
+        public void Fire(object sender, EventArgs e)
+        {
+            Bullet shipShoot = new Bullet(xPos + 2, yPos - 1, this.GetType());
+            if (GetType() == typeof(Ship))
+            {
+                shipShoot.FireUp();
+            }
+            else
+            {
+                shipShoot.FireDown();
+            }
+        }
 
         public int GetXPos()
         {

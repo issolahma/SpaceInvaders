@@ -62,7 +62,7 @@ namespace spaceInvaders
         static void GoToChoosenMenu(object sender, MenuEventArgs e)
         {
             int menuIndex = e.MenuIndex;
-           
+
             switch (menuIndex)
             {
                 case 0://Jouer
