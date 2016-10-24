@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace spaceInvaders
 {
@@ -12,7 +13,6 @@ namespace spaceInvaders
 		private const string UFO_ENEMY1 = "-0-";
 
         //Life status of the ships
-        private int lives = 1;
         private bool isAlive = true;
 
         //Speed of the basics enemy
@@ -38,6 +38,10 @@ namespace spaceInvaders
         TimeCtrl enemyTimer = new TimeCtrl(INTERVALENEMY);
         public TimeCtrl bonusTimer = new TimeCtrl(INTERVALBONUS); // Timer event to move the Bonus enemys
 
+        // Create player, and enemy bullet
+        private Bullet playerBullet;
+        private Bullet enemysBullet;
+
         /// <summary>
         /// Init the base of the game, screen, scores...
         /// </summary>
@@ -58,7 +62,7 @@ namespace spaceInvaders
 			Console.WriteLine("{0} {0} {0}\n", UFO_PLAYER);
 
 			//Create player's ship, and make it spawn on the screen
-			Program.playerShip = new Ship(lives, xPosShip, yPosShip, UFO_PLAYER, isAlive);
+			Program.playerShip = new Ship(xPosShip, yPosShip, UFO_PLAYER, isAlive);
 			Program.playerShip.SpawnPlayer();
 
 
@@ -73,15 +77,15 @@ namespace spaceInvaders
 					switch (i)
 					{
 					case 0:
-						ufo3[i, j] = new Ennemy(lives, xPosEnemy, yPosEnemy, UFO_ENEMY3, isAlive);
+						ufo3[i, j] = new Ennemy(xPosEnemy, yPosEnemy, UFO_ENEMY3, isAlive);
 						break;
 					case 1:
 					case 2:
-						ufo3[i, j] = new Ennemy(lives, xPosEnemy, yPosEnemy, UFO_ENEMY2, isAlive);
+						ufo3[i, j] = new Ennemy(xPosEnemy, yPosEnemy, UFO_ENEMY2, isAlive);
 						break;
 					case 3:
 					case 4:
-						ufo3[i, j] = new Ennemy(lives, xPosEnemy, yPosEnemy, UFO_ENEMY1, isAlive);
+						ufo3[i, j] = new Ennemy(xPosEnemy, yPosEnemy, UFO_ENEMY1, isAlive);
 						break;
 					default:
 						break;
@@ -97,7 +101,7 @@ namespace spaceInvaders
             }
 
             //Make the bonus enemy spawn on the screen
-            ufoBonus = new UFOBonus(lives, xPosBonusEnemy, yPosBonusEnemy, UFO_BONUS, isAlive);
+            ufoBonus = new UFOBonus(xPosBonusEnemy, yPosBonusEnemy, UFO_BONUS, isAlive);
 			ufoBonus.Spawn();
 		}
 
@@ -105,11 +109,19 @@ namespace spaceInvaders
         /// Start the game
         /// </summary>
         public void startGame()
-        {  
+        {
+            ColisionDetector colDetect = new ColisionDetector(ufoBonus, ufo3, Program.playerShip, playerBullet, enemysBullet);
+            /* Créer un nouveau thread pour la detection des touches http://www.tutorialspoint.com/csharp/csharp_multithreading.htm */
+            ThreadStart colDetectREF = new ThreadStart(colDetect.ActivDetection);
+            Thread coliDetect = new Thread(colDetectREF);
+            //coliDetect.Start(); trop lent--------------------------
+            /*colDetect.ActivDetection();*/
+
             enemyTimer.timeUp += MoveAllEnemy; 
             bonusTimer.timeUp += ufoBonus.Move;
             ufoBonus.isInTheEnd += stopBonusTimer;
             ufoBonus.timeToRespawn += startBonus;
+            colDetect.kaboum += DestroyShip;
         }
 
         /// <summary>
@@ -167,6 +179,12 @@ namespace spaceInvaders
         {
             bonusTimer.timeUp += ufoBonus.Move;
             ufoBonus.Spawn();
+        }
+
+        private void DestroyShip(object sender, ColDetectEventArgs e)
+        {
+            ShipMasterClass deadShip = e.ship;
+            deadShip = null;
         }
 
     }

@@ -4,16 +4,14 @@ namespace spaceInvaders
 {
     public class ShipMasterClass
     {
-        protected int lives = 0;
         protected int xPos = 0;
         protected int yPos = 0;
         protected string skin = "";
         protected bool isAlive = true;
         protected const int SHIPHEIGHT = 1;
 
-        protected ShipMasterClass (int lives, int xPos, int yPos, string skin, bool isAlive)
+        protected ShipMasterClass (int xPos, int yPos, string skin, bool isAlive)
 		{
-			this.lives = lives;
 			this.xPos = xPos;
 			this.yPos = yPos;
 			this.skin = skin;
@@ -66,6 +64,11 @@ namespace spaceInvaders
         public int GetYPos()
         {
             return yPos;
+        }
+
+        public void SetIsAlive(bool value)
+        {
+            isAlive = value;
         }
     }
 }

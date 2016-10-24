@@ -5,7 +5,7 @@ namespace spaceInvaders
 	public class Ship:ShipMasterClass
 	{
 
-		public Ship(int lives, int xPos, int yPos, string skin, bool isAlive):base(lives, xPos, yPos, skin, isAlive)
+		public Ship(int xPos, int yPos, string skin, bool isAlive):base(xPos, yPos, skin, isAlive)
 		{
             //Add ship method control to the keys events
             Program.ctrl.leftPressed += MoveLeft;
@@ -27,9 +27,7 @@ namespace spaceInvaders
         public void MoveRight(object sender, EventArgs e)
         {
             MoveRight();
-        }
-
-        
+        }  
     }
 }
 

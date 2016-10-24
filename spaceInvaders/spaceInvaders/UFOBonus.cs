@@ -20,7 +20,7 @@ namespace spaceInvaders
         /// <param name="yPos"></param>
         /// <param name="skin"></param>
         /// <param name="isAlive"></param>
-        public UFOBonus(int lives, int xPos, int yPos, string skin, bool isAlive):base(lives, xPos, yPos, skin, isAlive)
+        public UFOBonus(int xPos, int yPos, string skin, bool isAlive):base(xPos, yPos, skin, isAlive)
 		{
             
         }

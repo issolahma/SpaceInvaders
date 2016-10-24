@@ -8,7 +8,7 @@ namespace spaceInvaders
         
 
 		// Constructor
-		public Ennemy(int lives, int xPos, int yPos, string skin, bool isAlive):base(lives, xPos, yPos, skin, isAlive)
+		public Ennemy(int xPos, int yPos, string skin, bool isAlive):base(xPos, yPos, skin, isAlive)
 		{
          
 		}

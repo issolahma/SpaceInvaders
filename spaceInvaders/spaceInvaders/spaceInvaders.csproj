@@ -46,7 +46,6 @@
     <Compile Include="Apropos.cs" />
     <Compile Include="ColisionDetector.cs" />
     <Compile Include="Controls.cs" />
-    <Compile Include="DetectHit.cs" />
     <Compile Include="Ennemy.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Menu.cs" />
