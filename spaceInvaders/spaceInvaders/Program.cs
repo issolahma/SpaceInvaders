@@ -13,6 +13,7 @@ namespace spaceInvaders
         private static Menu myMenu;
         public static Ship playerShip;
         public static Game myGame;
+        public static Bullet playerBullet;
 
         static void Main(string[] args)
         {

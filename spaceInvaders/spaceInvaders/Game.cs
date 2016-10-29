@@ -38,7 +38,7 @@ namespace spaceInvaders
         TimeCtrl enemyTimer = new TimeCtrl(INTERVALENEMY);
         public TimeCtrl bonusTimer = new TimeCtrl(INTERVALBONUS); // Timer event to move the Bonus enemys
 
-        // Create player, and enemy bullet
+        // Create player, and enemy's bullet
         private Bullet playerBullet;
         private Bullet enemysBullet;
 
@@ -111,11 +111,7 @@ namespace spaceInvaders
         public void startGame()
         {
             ColisionDetector colDetect = new ColisionDetector(ufoBonus, ufo3, Program.playerShip, playerBullet, enemysBullet);
-            /* Créer un nouveau thread pour la detection des touches http://www.tutorialspoint.com/csharp/csharp_multithreading.htm */
-            ThreadStart colDetectREF = new ThreadStart(colDetect.ActivDetection);
-            Thread coliDetect = new Thread(colDetectREF);
-            //coliDetect.Start(); trop lent--------------------------
-            /*colDetect.ActivDetection();*/
+            //colDetect.ActivDetection(); //---------------------tttttttt-------------
 
             enemyTimer.timeUp += MoveAllEnemy; 
             bonusTimer.timeUp += ufoBonus.Move;

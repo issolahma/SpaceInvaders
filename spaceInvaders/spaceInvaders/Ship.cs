@@ -27,6 +27,13 @@ namespace spaceInvaders
         public void MoveRight(object sender, EventArgs e)
         {
             MoveRight();
+        }
+
+        public void Fire(object sender, EventArgs e)
+        {
+            Program.playerBullet = new Bullet(xPos, yPos);
+            TimeCtrl bulletTimer = new TimeCtrl(400);
+            bulletTimer.timeUp += Program.playerBullet.FireUp;
         }  
     }
 }

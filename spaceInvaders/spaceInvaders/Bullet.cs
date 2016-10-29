@@ -11,39 +11,31 @@ namespace spaceInvaders
         private int xPosShoot = 0;
         private int yPosShoot = 0;
         private string skin = "*";
-        private Type shipType;
+        //private Type shipType;
 
-        public Bullet(int xPos, int yPos, Type shipType)
+        public Bullet(int xPos, int yPos)
         {
-            xPosShoot = xPos;
+            xPosShoot = xPos + 2;
             yPosShoot = yPos;
-            this.shipType = shipType;
+            //this.shipType = shipType;
         }
 
-        public void FireUp()
+        public void FireUp(object sender, EventArgs e)
         {
-            do
-            {
-                Console.SetCursorPosition(xPosShoot, yPosShoot);
-                Console.Write(skin);
-                // initial x, y position, area size, area height, final x, y position
-                Console.MoveBufferArea(xPosShoot, yPosShoot, skin.Length, 1, xPosShoot, yPosShoot - 1);
-                yPosShoot--;
-                Thread.Sleep(400);
-            } while (yPosShoot >= 4);
+            yPosShoot--;
+            Console.SetCursorPosition(xPosShoot, yPosShoot);
+            Console.Write(skin);
+            // initial x, y position, area size, area height, final x, y position
+            Console.MoveBufferArea(xPosShoot, yPosShoot, skin.Length, 1, xPosShoot, yPosShoot - 1);
         }
 
         public void FireDown()
         {
-            do
-            {
-                Console.SetCursorPosition(xPosShoot, yPosShoot);
-                Console.Write(skin);
-                // initial x, y position, area size, area height, final x, y position
-                Console.MoveBufferArea(xPosShoot, yPosShoot, skin.Length, 1, xPosShoot, yPosShoot + 1);
-                yPosShoot++;
-                Thread.Sleep(400);
-            } while (yPosShoot != 21);
+            yPosShoot++;
+            Console.SetCursorPosition(xPosShoot, yPosShoot);
+            Console.Write(skin);
+            // initial x, y position, area size, area height, final x, y position
+            Console.MoveBufferArea(xPosShoot, yPosShoot, skin.Length, 1, xPosShoot, yPosShoot + 1);
         }
 
         public int GetXPosShoot()
@@ -56,9 +48,5 @@ namespace spaceInvaders
             return yPosShoot;
         }
 
-        public Type GetShooterType()
-        {
-            return shipType;
-        }
     }
 }
